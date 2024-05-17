@@ -5,9 +5,9 @@ import { createMisskeyPostButton, misskeyButtonClassName, syncDisableState } fro
 import { createMisskeyImageOptionButton } from "../UI/ImageFlagButton"
 import { createLocalOnlyButton, localOnlyButtonClassName } from "../UI/LocalOnlyButton";
 
-const gifButtonSelector = 'div[data-testid="gifSearchButton"]'
-const buttonSelector = 'div[data-testid="tweetButton"], div[data-testid="tweetButtonInline"]'
-const attachmentsImageSelector = 'div[data-testid="attachments"] div[role="group"]'
+const gifButtonSelector = 'button[data-testid="gifSearchButton"]'
+const buttonSelector = 'button[data-testid="tweetButton"], button[data-testid="tweetButtonInline"]'
+const attachmentsImageSelector = 'div[data-testid="toolBar"] div[role="tablist"]'
 
 // スコープボタンを作成する
 const addScopeButton = (iconBox: HTMLElement) => {
@@ -30,7 +30,7 @@ const addMisskeyPostButton = (tweetButton: HTMLElement, tweetBox: HTMLElement) =
   if (tweetBox.querySelector(`.${misskeyButtonClassName}`)) return;
 
   const misskeybutton = createMisskeyPostButton(tweetToMisskey, tweetButton);
-  
+
   tweetBox.appendChild(misskeybutton);
   syncDisableState(tweetButton, misskeybutton);
 }
@@ -66,7 +66,7 @@ const foundAttachmentsImageHandler = (attachmentsImage: HTMLElement) => {
   // すでにボタンがある場合は何もしない
   if (attachmentsImage.getAttribute('data-has-flag-button')) return;
   attachmentsImage.setAttribute('data-has-flag-button', 'true');
-  
+
   const editButton = Array.from(attachmentsImage.querySelectorAll("div[role='button']"))[1] as HTMLElement;
   if (!editButton) return;
   addMisskeyImageOptionButton(editButton, attachmentsImage);
@@ -77,14 +77,14 @@ const observer = new MutationObserver(mutations => {
       if (mutation.type !== 'childList') return;
       mutation.addedNodes.forEach((node: any) => {
         if (node.nodeType !== Node.ELEMENT_NODE) return;
-        
+
         const tweetButton = node.querySelector(buttonSelector);
         if (tweetButton) { foundTweetButtonHandler(tweetButton); }
-        
+
         const attachmentsImages = document.querySelectorAll(attachmentsImageSelector);
-        if (attachmentsImages) { 
+        if (attachmentsImages) {
           attachmentsImages.forEach((attachmentsImage: any) => {
-            foundAttachmentsImageHandler(attachmentsImage); 
+            foundAttachmentsImageHandler(attachmentsImage);
           })
         }
       });
