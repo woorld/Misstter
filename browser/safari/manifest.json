@@ -21,7 +21,7 @@
   "content_scripts": [
       {
           "matches": [
-            "https://twitter.com/*",
+            "https://x.com/*",
             "https://tweetdeck.twitter.com/*"
           ],
           "js": ["js/vendor.js", "js/content_script.js"]
@@ -32,7 +32,7 @@
     "service_worker": "js/background.js"
   },
 
-  "permissions": [ 
+  "permissions": [
     "storage"
   ],
 
@@ -41,14 +41,14 @@
   ],
 
   "web_accessible_resources": [
-    { 
+    {
       "resources": [
         "misskey_icon.png"
-      ], 
+      ],
       "matches": [
-        "https://twitter.com/*",
+        "https://x.com/*",
         "https://tweetdeck.twitter.com/*"
-      ] 
+      ]
     }
   ]
 }
